@@ -2,6 +2,11 @@
 - [Goal](#goal)
 - [Repo Features](#repo-features)
 - [Configurations](#configurations)
+- [Development usage](#development-usage)
+- [Production usage](#production-usage)
+- [License](#license)
+- [Todo](#todo)
+- [Bugs](#bugs)
 
 # Goal
 This project main goal is to provide a way to deploy django applications by using docker along with nginx, gunicorn and letsencrypt and much more features a backed developer needs.
@@ -98,4 +103,10 @@ This project main goal is to provide a way to deploy django applications by usin
 MIT.
 
 # Todo
+- [ ] fix production composefile
+- [ ] add RestApi hints and configurations
+- [ ] connect repo to travis ci
+- [ ] add CBV hints in views and ulrs
 
+# Bugs
+Feel free to let me know if something needs to be fixed. or even any features seems to be needed in this repo.
