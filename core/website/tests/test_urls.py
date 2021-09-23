@@ -11,7 +11,7 @@ class TestUrls(SimpleTestCase):
     def test_index_view_resolve(self):
         url = reverse('app:name')
         self.assertEquals(resolve(url).func, function_view_name)
-    
+
     # if using FBV you can check the request like this + args
     def test_function_view_resolve(self):
         url = reverse('app:name',args=['something'])
@@ -27,4 +27,3 @@ class TestUrls(SimpleTestCase):
     def test_index_view_resolve(self):
         url = reverse('website:index')
         self.assertEquals(resolve(url).func, index_view)
-   

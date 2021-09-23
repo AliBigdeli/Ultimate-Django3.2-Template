@@ -1,11 +1,11 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-import json
+# import json
 
 
 class TestViews(TestCase):
     '''
-    Guidline to create testcases for views response and database 
+    Guidline to create testcases for views response and database
 
     # function to setup everything before testing included functions
      def setUp(self):
@@ -39,7 +39,7 @@ class TestViews(TestCase):
             ...
         })
 
-        # change code accordingly this is used to be redirected to 
+        # change code accordingly this is used to be redirected to
         # another page after successful form
         self.assertEquals(response.status_code, 302)
         self.assertEquals(ModelCreated.first().title,'sample')
@@ -62,7 +62,7 @@ class TestViews(TestCase):
             ...
         )
         url = reverse('app:name')
-        # use args accordingly if url use in url or else as json arg 
+        # use args accordingly if url use in url or else as json arg
         # response = self.client.delete(url,json.dumps({'id':1}))
         response = self.client.delete(url)
 
@@ -73,7 +73,7 @@ class TestViews(TestCase):
     def test_view_DELETE(self):
 
         url = reverse('app:name')
-        # use args accordingly if url use in url or else as json arg 
+        # use args accordingly if url use in url or else as json arg
         # response = self.client.delete(url,json.dumps({'id':1}))
         response = self.client.delete(url)
 
