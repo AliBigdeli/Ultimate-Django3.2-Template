@@ -118,10 +118,12 @@ This project main goal is to provide a way to deploy django applications by usin
 MIT.
 
 # Todo
-- [ ] fix production composefile
-- [ ] add RestApi hints and configurations
+- [x] fix production composefile
 - [x] connect repo to travis ci
-- [ ] add CBV hints in views and ulrs
+- [ ] add CBV hints in views and urls
+- [ ] add RestApi hints and configurations
+- [ ] add development usage doc
+- [ ] add production usage doc
 
 # Bugs
 Feel free to let me know if something needs to be fixed. or even any features seems to be needed in this repo.
