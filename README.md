@@ -120,7 +120,7 @@ MIT.
 # Todo
 - [ ] fix production composefile
 - [ ] add RestApi hints and configurations
-- [ ] connect repo to travis ci
+- [x] connect repo to travis ci
 - [ ] add CBV hints in views and ulrs
 
 # Bugs
