@@ -3,7 +3,8 @@ version: "3.9"
 services:
   app:
     build: .
-    container_name: django_app    
+    container_name: django_app
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./core:/app
     environment:      
