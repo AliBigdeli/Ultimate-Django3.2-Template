@@ -48,9 +48,9 @@ This project main goal is to provide a way to deploy django applications by usin
   <p>Docker compose prod/dev and minimum setup for django and db included,with volumes and network</p>
   
  <li>
-       <strong>Nginx</strong>        
+       <strong>Nginx + Gunicorn</strong>        
   </li>
-  <p>included nginx setup and file configs for production</p>
+  <p>included nginx setup with gunicorn as serving service and file configs for production</p>
  
  <li>
        <strong>Django env</strong>        
