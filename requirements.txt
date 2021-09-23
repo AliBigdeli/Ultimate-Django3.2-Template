@@ -1,0 +1,4 @@
+django>3.2,<3.3
+flake8
+pillow
+django-robots

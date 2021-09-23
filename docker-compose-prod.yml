@@ -1,0 +1,42 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
+
+  app:
+    build: 
+      context: .
+      dockerfile: DockerFilesConf/django/Dockerfile
+    env_file:
+      - .env
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+
+  nginx:
+    build: 
+      context: .
+      dockerfile: DockerFilesConf/nginx/Dockerfile
+    volumes:
+      - static:/static
+      - media:/media
+    ports:
+      - "80:80"
+    depends_on:
+      - app
+
+volumes:
+  static:
+  media:

@@ -1,0 +1,10 @@
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+README.md
+LICENSE
+docker-compose.yml
+db.sqlite3
+DockerFilesConf
