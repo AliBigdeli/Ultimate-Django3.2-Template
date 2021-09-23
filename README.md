@@ -1,10 +1,9 @@
 # Guideline
-<ol>
- <li>`[Goal](#Goal)`</li>
- 
-</ol>
+- [Goal](#goal)
+- [Repo Features](#repo-features)
+- [Configurations](#configurations)
 
-# `Goal`
+# Goal
 This project main goal is to provide a way to deploy django applications by using docker along with nginx, gunicorn and letsencrypt and much more features a backed developer needs.
 
 
