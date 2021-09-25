@@ -11,7 +11,9 @@
 </p>
 
 [![Build Status](https://app.travis-ci.com/AliBigdeli/Ultimate-Django3.2-Template.svg?token=vtyMEBvqfUPy2NHM9icv&branch=main)](https://app.travis-ci.com/AliBigdeli/Ultimate-Django3.2-Template)
+[![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
+    
 # Guideline
 - [Goal](#goal)
 - [Repo Features](#repo-features)
