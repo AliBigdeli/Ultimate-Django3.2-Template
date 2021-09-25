@@ -31,7 +31,7 @@ This project main goal is to provide a way to deploy django applications by usin
 # Repo Features
 <ul>
   <li>
-       <strong>Latest LTS Django Latest LTS</strong>        
+       <strong>Latest LTS Django3.2</strong>        
   </li>
  <p>Latest LTS included 3.2.x and needed requirements</p>
  <li>
@@ -59,7 +59,7 @@ This project main goal is to provide a way to deploy django applications by usin
   <p>enviroment sample file and setup</p>
  
  <li><strong>Hints and Files</strong></li>
-  <p>Sample files and hints all over the template for more giving more pace</p>
+  <p>Sample files and hints all over the template for giving more pace</p>
  
  <li><strong>Black</strong></li>
   <p>Reformating your codes to standard projects</p>
