@@ -14,9 +14,9 @@ services:
   app:
     build: 
       context: .
-      dockerfile: DockerFilesConf/django/Dockerfile
+      dockerfile: compose/django/Dockerfile
     env_file:
-      - .env
+      - .envs/django/.env
     volumes:
       - static:/static
       - media:/media
@@ -28,11 +28,13 @@ services:
   nginx:
     build: 
       context: .
-      dockerfile: DockerFilesConf/nginx/Dockerfile
+      dockerfile: compose/nginx/Dockerfile
     volumes:
       - static:/static
       - media:/media
       # - /nginx/letsencrypt:/etc/letsencrypt
+    env_file:
+      - .envs/nginx/.env
     ports:
       - "80:80"
       - "443:443"
