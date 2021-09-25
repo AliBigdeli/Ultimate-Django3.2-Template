@@ -17,6 +17,7 @@
 - [Repo Features](#repo-features)
 - [Configurations](#configurations)
 - [Development usage](#development-usage)
+    - [Clone repo](#clone-this-repo-anywhere-you-want-and-move-into-the-directory)
 - [Testing usage](#testing-usage)
 - [Production usage](#production-usage)
 - [License](#license)
@@ -162,9 +163,6 @@ something on your machine is already running on port 8000. then you have to chan
 #### Check it out in a browser:
 
 Visit <http://localhost:8000> in your favorite browser.
-
-Not seeing any CSS? That means Webpack is still compiling. Give it
-a few more seconds and reload. It should self resolve.
 
 # Testing Usage
 #### running all at the same time:
