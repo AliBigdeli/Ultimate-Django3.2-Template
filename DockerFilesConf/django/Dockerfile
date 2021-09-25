@@ -13,5 +13,5 @@ RUN pip3 install -r requirements.txt
 
 COPY ./core/ /app/
 
-COPY entrypoint.sh /
+COPY ./DockerFilesConf/django/entrypoint.sh /
 ENTRYPOINT [ "sh","/entrypoint.sh" ]

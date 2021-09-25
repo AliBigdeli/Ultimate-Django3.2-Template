@@ -32,10 +32,13 @@ services:
     volumes:
       - static:/static
       - media:/media
+      # - /nginx/letsencrypt:/etc/letsencrypt
     ports:
       - "80:80"
+      - "443:443"
     depends_on:
       - app
+      - db
 
 volumes:
   static:
