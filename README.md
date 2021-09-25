@@ -169,7 +169,7 @@ a few more seconds and reload. It should self resolve.
 # Testing Usage
 #### running all at the same time:
 ```sh
-docker-compose run --rm app sh -c " black -l 79 flake8 && python manage.py test" -v core:/app
+docker-compose run --rm app sh -c " black -l 79 && flake8 && python manage.py test" -v core:/app
 ```
 
 # Production usage
