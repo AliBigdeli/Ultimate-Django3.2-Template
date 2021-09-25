@@ -17,7 +17,6 @@
 - [Repo Features](#repo-features)
 - [Configurations](#configurations)
 - [Development usage](#development-usage)
-    - [Clone repo](#clone-this-repo-anywhere-you-want-and-move-into-the-directory)
 - [Testing usage](#testing-usage)
 - [Production usage](#production-usage)
 - [License](#license)
