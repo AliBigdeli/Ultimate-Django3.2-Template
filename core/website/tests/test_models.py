@@ -2,7 +2,7 @@ from django.test import TestCase
 
 
 class TestModel(TestCase):
-    '''
+    """
     def setUp(self):
         self.object = ModelClass.objects.create(
             name = 'ali',
@@ -15,5 +15,6 @@ class TestModel(TestCase):
         self.assertEquals(self.object.name,'ali')
 
     # create more functions based on the elements and returns of properties
-    '''
+    """
+
     pass

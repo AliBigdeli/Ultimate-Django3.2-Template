@@ -3,7 +3,7 @@ from django.test import SimpleTestCase
 
 class TestForms(SimpleTestCase):
 
-    '''
+    """
     Guideline to create simple testcases for forms
 
     # simple validation form with data
@@ -19,5 +19,6 @@ class TestForms(SimpleTestCase):
         form = SampleForm(data={})
         self.assertFalse(form.is_valid())
         self.assertEquals(len(form.errors),3)
-    '''
+    """
+
     pass

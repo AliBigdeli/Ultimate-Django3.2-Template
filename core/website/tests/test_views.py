@@ -1,10 +1,11 @@
 from django.test import TestCase, Client
 from django.urls import reverse
+
 # import json
 
 
 class TestViews(TestCase):
-    '''
+    """
     Guidline to create testcases for views response and database
 
     # function to setup everything before testing included functions
@@ -78,7 +79,7 @@ class TestViews(TestCase):
         response = self.client.delete(url)
 
         self.assertEquals(response.status_code, 404)
-    '''
+    """
 
     # function to setup everything before testing included functions
     def setUp(self):
@@ -86,6 +87,6 @@ class TestViews(TestCase):
 
     # function to check the response of a url and the template used inside
     def test_index_url(self):
-        response = self.client.get(reverse('website:index'))
+        response = self.client.get(reverse("website:index"))
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'website/index.html')
+        self.assertTemplateUsed(response, "website/index.html")

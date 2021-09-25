@@ -14,20 +14,26 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
 from django.conf import settings
 from django.conf.urls.static import static
-# from django.conf.urls import (handler400, handler403, handler404, handler500)
+from django.views.generic import TemplateView
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('website.urls'))
+    path("admin/", admin.site.urls),
+    path("", include("website.urls")),
 ]
+
+if settings.COMINGSOON:
+    urlpatterns.insert(
+        0, re_path(r"^", TemplateView.as_view(template_name="comingsoon.html"))
+    )
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-handler400 = 'website.views.error_400'  # bad_request
-handler403 = 'website.views.error_403'  # permission_denied
-handler404 = 'website.views.error_404'  # page_not_found
-handler500 = 'website.views.error_500'  # server_error
+handler400 = "website.views.error_400"  # bad_request
+handler403 = "website.views.error_403"  # permission_denied
+handler404 = "website.views.error_404"  # page_not_found
+handler500 = "website.views.error_500"  # server_error

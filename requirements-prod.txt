@@ -1,6 +1,0 @@
-django>3.2,<3.3
-flake8
-psycopg2-binary
-pillow
-django-robots
-gunicorn

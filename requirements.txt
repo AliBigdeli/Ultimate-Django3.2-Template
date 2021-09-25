@@ -1,4 +1,7 @@
 django>3.2,<3.3
 flake8
+black
 pillow
 django-robots
+psycopg2-binary
+gunicorn
