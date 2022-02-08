@@ -1,14 +1,18 @@
-version: "3.3"
+version: "3.8"
    
 services:
   app:
-    build: .
+    build: 
+      context: .
+      dockerfile: Dockerfiles/dev/django/Dockerfile
     container_name: app
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./core:/app
     environment:      
       - DEBUG=1
+    env_file:
+      - envs/dev/django/.env
     ports:
       - "8000:8000"
     

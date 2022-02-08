@@ -1,10 +1,13 @@
-FROM python:3.8-slim-buster
+FROM python:3.9-slim-buster
 
 LABEL maintainer="bigdeli.ali3@gmail.com"
 
 ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
+
+# RUN mkdir /static
+# RUN mkdir /media
 
 COPY requirements.txt /app/
 
@@ -13,5 +16,8 @@ RUN pip3 install -r requirements.txt
 
 COPY ./core/ /app/
 
-COPY compose/django/entrypoint.sh /
+COPY Dockerfiles/stage/django/entrypoint.sh /
+
+RUN chmod +x  /entrypoint.sh
+
 ENTRYPOINT [ "sh","/entrypoint.sh" ]
