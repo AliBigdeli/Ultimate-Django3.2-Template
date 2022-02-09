@@ -181,7 +181,8 @@ MIT.
 - [x] connect repo to travis ci
 - [x] add development usage doc
 - [x] add test usage doc
-- [ ] add encryptions
+- [x] add encryptions
+- [x] add 3 stages dev stageing production
 - [ ] add production usage doc
 
 # Bugs
