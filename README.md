@@ -2,7 +2,7 @@
 <h3 align="center">Just a big starting point for any backend project</h3>
 <p align="center">
 <a href="https://www.python.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a>
-<a href="https://www.djangoproject.com/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/django/django-original.svg" alt="django" width="40" height="40"/> </a> 
+<a href="https://www.djangoproject.com/" target="_blank"> <img src="https://user-images.githubusercontent.com/29748439/177030588-a1916efd-384b-439a-9b30-24dd24dd48b6.png" alt="django" width="40" height="40"/> </a> 
 <a href="https://www.docker.com/" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original-wordmark.svg" alt="docker" width="40" height="40"/> </a>
 <a href="https://travis-ci.org" target="_blank"> <img src="https://www.vectorlogo.zone/logos/travis-ci/travis-ci-icon.svg" alt="travisci" width="40" height="40"/> </a>
 <a href="https://www.postgresql.org" target="_blank"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original-wordmark.svg" alt="postgresql" width="40" height="40"/> </a>
@@ -12,6 +12,8 @@
 
 [![Build Status](https://app.travis-ci.com/AliBigdeli/Ultimate-Django3.2-Template.svg?token=vtyMEBvqfUPy2NHM9icv&branch=main)](https://app.travis-ci.com/AliBigdeli/Ultimate-Django3.2-Template)
 [![Code Style Black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
+
+
 
     
 # Guideline
@@ -62,12 +64,12 @@ This project main goal is to provide a way to deploy django applications by usin
  <li><strong>Hints and Files</strong></li>
   <p>Sample files and hints all over the template for giving more pace</p>
  
- <li><strong>Black</strong></li>
-  <p>Reformating your codes to standard projects</p>
+ <li><strong>Github Actions</strong></li>
+  <p>Pre Configurations for CI/CD in github actions. plus two step jobs for testing and deploying on vps with docker</p>
  
 
- <li><strong>Travis and Flake8</strong></li>
-  <p>Included with travis.yml configuration file for test purposes.plus included Flake8 and config files.</p>
+ <li><strong>Black and Flake8</strong></li>
+  <p>Included Pep8 and Flake8 configuration file for test purposes.Reformating the codes and bring the best out of it.</p>
  <li>
        <strong>Preconfigured</strong>        
   </li>
