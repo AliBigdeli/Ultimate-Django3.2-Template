@@ -47,7 +47,6 @@ services:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
     depends_on:
-      - redis
       - backend
 
 volumes:

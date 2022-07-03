@@ -1,32 +1,45 @@
-version: "3.8"
+version: "3.9"
    
 services:
-  app:
-    build: 
-      context: .
-      dockerfile: Dockerfiles/prod/django/Dockerfile
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
-    env_file:
-      - envs/prod/django/.env
-    volumes:
-      - static_volume:/app/static
-      - media_volume:/app/media
-    expose:
-      - 8000
-    depends_on:
-      - db
+  redis:
+    container_name: redis
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --loglevel warning
+
   db:
-    image: postgres:13-alpine
+    image: postgres:14-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
       - envs/prod/db/.env
     restart: always
 
+  backend:
+    build: 
+      context: .
+      dockerfile: Dockerfiles/prod/django/Dockerfile
+    container_name: backend
+    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    expose:
+      - "8000"
+    env_file:
+      - envs/prod/django/.env
+    depends_on:
+      - db
+      - redis
+  
+
   nginx-proxy:
     container_name: nginx-proxy
-    build: 
-      context: ./Dockerfiles/prod/nginx/
+    build:
+      context: .
+      dockerfile: Dockerfiles/prod/nginx/Dockerfile
     restart: always
     ports:
       - 443:443
@@ -39,7 +52,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
-      - app
+      - backend
     
   nginx-proxy-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
