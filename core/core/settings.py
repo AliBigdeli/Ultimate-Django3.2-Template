@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 import os
 from django.contrib.messages import constants as messages
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,21 +22,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "SECRET_KEY",
-    "django-insecure-pz)lf%u@oyaqjg3sl3l-2%78(u8&jibcn+g*c5a2)2w%_^obft",
-)
+SECRET_KEY = config("SECRET_KEY", default="test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get("DEBUG", "1")) == "1"
+DEBUG = config("DEBUG", cast=bool, default=True)
 
 
-ALLOWED_HOSTS = ["*"]
-ALLOWED_HOSTS_ENV = os.environ.get("ALLOWED_HOSTS")
-if ALLOWED_HOSTS_ENV:
-    ALLOWED_HOSTS.extend(ALLOWED_HOSTS_ENV.split(","))
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS",
+    cast=lambda v: [s.strip() for s in v.split(",")],
+    default="*",
+)
 
-COMINGSOON = str(os.environ.get("COMINGSOON", 0)) == "1"
+COMINGSOON = config("COMINGSOON", cast=bool, default=False)
+
 
 # Application definition
 
@@ -49,9 +49,14 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.sitemaps",
     "website",
+    "rest_framework",
+    "rest_framework.authtoken",
+    "django_filters",
+    "drf_yasg",
+    "corsheaders",
 ]
 
-SITE_ID = int(os.environ.get("SITE_ID", 1))
+SITE_ID = config("SITE_ID", cast=int, default=1)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -90,14 +95,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 if not DEBUG:
     DATABASES = {
         "default": {
-            "ENGINE": os.environ.get(
-                "DB_ENGINE", "django.db.backends.postgresql"
-            ),
-            "NAME": os.environ.get("DB_NAME", "postgres"),
-            "USER": os.environ.get("DB_USER", "postgres"),
-            "PASSWORD": os.environ.get("DB_PASS", "postgres"),
-            "HOST": os.environ.get("DB_HOST", "db"),
-            "PORT": int(os.environ.get("DB_PORT", "5432")),
+            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
+            "NAME": config("DB_NAME", default="postgres" ),
+            "USER": config("DB_USER", default= "postgres"),
+            "PASSWORD": config("DB_PASS", default= "postgres"),
+            "HOST": config("DB_HOST", default="db" ),
+            "PORT": config("DB_PORT", cast=int,default= 5432),
         }
     }
 else:
@@ -133,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE =  config("TIME_ZONE", default= "UTC")
 
 USE_I18N = True
 
@@ -148,7 +151,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
 
-STATIC_ROOT =  BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "static"
 MEDIA_ROOT = BASE_DIR / "media"
 
 
@@ -173,27 +176,28 @@ MESSAGE_TAGS = {
 
 
 # Email Configurations for production and development
-# if not DEBUG:
-#     EMAIL_BACKEND = os.environ.get(
-#         "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
-#     )
-#     EMAIL_HOST = os.environ.get("EMAIL_HOST", "mail.domain.com")
-#     EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
-#     EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER", "info@domain.com")
-#     EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD", "password")
-#     EMAIL_USE_SSL = str(os.environ.get("EMAIL_USE_SSL")) == "0"
-#     EMAIL_USE_TLS = str(os.environ.get("EMAIL_USE_TLS")) == "1"
-#     DEFAULT_FROM_EMAIL = os.environ.get(
-#         "DEFAULT_FROM_EMAIL", "info@domain.com"
-#     )
-# else:
-#     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-#     EMAIL_HOST = "localhost"
-#     EMAIL_PORT = 1025
+if not DEBUG:
+    EMAIL_BACKEND = config(
+        "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+    )
+    EMAIL_HOST = config("EMAIL_HOST",default="mail.example.come")
+    EMAIL_PORT = int(config("EMAIL_PORT", default=465))
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER",default="infor@example.com")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default="password")
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=True)
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=False)
+    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL",default="infor@example.com")
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+    EMAIL_USE_TLS = False
+    EMAIL_HOST = "smtp4dev"
+    EMAIL_HOST_USER = ""
+    EMAIL_HOST_PASSWORD = ""
+    EMAIL_PORT = 25
 
 
 # security configs for production
-if not DEBUG:
+if config("USE_SSL_CONFIG",cast=bool, default=False):
     # Https settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -210,3 +214,53 @@ if not DEBUG:
     X_FRAME_OPTIONS = "DENY"
     SECURE_REFERRER_POLICY = "strict-origin"
     USE_X_FORWARDED_HOST = True
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.AllowAny",
+    ],
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ],
+}
+if config("DISABLE_BROWSEABLE_API",cast=bool, default=False):
+    REST_FRAMEWORK.update(
+        {
+            "DEFAULT_RENDERER_CLASSES": (
+                "rest_framework.renderers.JSONRenderer",
+            )
+        }
+    )
+
+# cors headers config
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:8000",
+#     "http://127.0.0.1:8000",
+    
+# ]
+
+# swagger configs
+SHOW_SWAGGER  = config("SHOW_SWAGGER",cast=bool, default=True)
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': True,
+    'SECURITY_DEFINITIONS': [],
+    "LOGIN_URL": 'rest_framework:login',
+    "LOGOUT_URL": 'rest_framework:logout',
+    'REFETCH_SCHEMA_ON_LOGOUT': True,
+    'JSON_EDITOR': True,
+
+}
+
+# simple jwt settings
+from datetime import timedelta
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+    "ROTATE_REFRESH_TOKENS": False,
+    "BLACKLIST_AFTER_ROTATION": False,
+    "UPDATE_LAST_LOGIN": False,
+}

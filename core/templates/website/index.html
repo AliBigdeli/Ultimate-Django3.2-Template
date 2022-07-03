@@ -1,4 +1,13 @@
 {% extends "base.html" %}
+{% block extra_css %}
+<style>
+    .logo {
+        -webkit-filter: grayscale(100%);
+        /* Safari 6.0 - 9.0 */
+        filter: grayscale(100%);
+    }
+</style>
+{% endblock %}
 
 {% block content %}
 <div class="container px-4 py-5" id="Features">
@@ -71,21 +80,22 @@
         </div>
         <div class="col d-flex align-items-start">
             <img class="bi text-muted flex-shrink-0 me-3"
-                src="https://cdn.icon-icons.com/icons2/2389/PNG/512/travisci_logo_icon_144792.png" width="50"
+                src="https://icons-for-free.com/iconfiles/png/512/visible+files-1319964824317250573.png" width="50"
                 height="50">
             <div>
-                <h4 class="fw-bold mb-0">Travis and Flake8</h4>
-                <p>Included with travis.yml configuration file for test purposes.plus included Flake8 and config files.
+                <h4 class="fw-bold mb-0">Black and Flake8</h4>
+                <p>Included Pep8 and Flake8 configuration file for test purposes.Reformating the codes and bring the
+                    best out of it.
                 </p>
             </div>
         </div>
         <div class="col d-flex align-items-start">
-            <img class="bi text-muted flex-shrink-0 me-3"
-                src="https://icons-for-free.com/iconfiles/png/512/visible+files-1319964824317250573.png" width="50"
-                height="50">
+            <img class="bi text-muted flex-shrink-0 me-3 logo"
+                src="https://avatars.githubusercontent.com/u/44036562?s=200&v=4" width="50" height="50">
             <div>
-                <h4 class="fw-bold mb-0">Black</h4>
-                <p>Reformating the codes and bring the best out of it.
+                <h4 class="fw-bold mb-0">Github Actions</h4>
+                <p>Pre Configurations for CI/CD in github actions. plus two step jobs for testing and deploying on vps
+                    with docker.
                 </p>
             </div>
         </div>
@@ -266,4 +276,7 @@
     </div>
 
 </div>
+{% endblock %}
+
+{% block extra_js %}
 {% endblock %}

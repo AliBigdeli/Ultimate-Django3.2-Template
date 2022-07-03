@@ -1,18 +1,57 @@
-version: "3.8"
-   
+version: "3.9"
+
 services:
-  app:
+  # redis:
+  #   container_name: redis
+  #   image: redis
+  #   restart: always
+  #   ports:
+  #   - "6379:6379"
+  #   command: redis-server --save 60 1 --loglevel warning
+
+  backend:
     build: 
-      context: .
+      context: . 
       dockerfile: Dockerfiles/dev/django/Dockerfile
-    container_name: app
+    container_name: backend    
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - ./core:/app
-    environment:      
-      - DEBUG=1
-    env_file:
-      - envs/dev/django/.env
     ports:
       - "8000:8000"
-    
+    environment:
+      - SECRET_KEY=test
+      - DEBUG=True
+      - COMINGSOON=False
+    restart: always
+    # depends_on:
+    #   - redis
+  
+  # worker:
+  #   build: .
+  #   command: celery -A core worker --loglevel=info
+  #   volumes:
+  #     - ./core:/app
+  #   depends_on:
+  #     - redis
+  #     - backend
+
+  smtp4dev:
+      image: rnwood/smtp4dev:v3
+      restart: always
+      ports:
+        # Change the number before : to the port the web interface should be accessible on
+        - '5000:80'
+        # Change the number before : to the port the SMTP server should be accessible on
+        - '25:25'
+        # Change the number before : to the port the IMAP server should be accessible on
+        - '143:143'
+      volumes:
+        # This is where smtp4dev stores the database..
+          - smtp4dev-data:/smtp4dev
+      environment:
+        - ServerOptions__HostName=smtp4dev
+
+
+volumes:
+  smtp4dev-data:

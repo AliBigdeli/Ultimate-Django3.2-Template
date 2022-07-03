@@ -1,7 +1,32 @@
-django>3.2,<3.3
-flake8
-black
-pillow
+# general  modules
+django >3.2,<3.3
+Pillow
+djangorestframework
+
+# env controlls
+python-decouple
+
+# third party modules
+markdown       
+django-filter  
+drf-yasg[validation]
+djangorestframework-simplejwt
+django-cors-headers
 django-robots
-psycopg2-binary
+
+# deployment module
 gunicorn
+
+# refactoring and tests
+black
+flake8
+pytest
+pytest-django
+Faker
+
+# background proccess and cache
+celery
+django-redis
+
+# database client
+psycopg2-binary
