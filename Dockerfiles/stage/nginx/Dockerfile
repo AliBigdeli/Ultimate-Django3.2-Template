@@ -1,2 +1,2 @@
 FROM nginx
-COPY conf.d/ /etc/nginx/conf.d/
+COPY Dockerfiles/stage/nginx/conf.d/ /etc/nginx/conf.d/

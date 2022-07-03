@@ -36,13 +36,14 @@ services:
       - db
 
   nginx:
-    image: nginx
+    build:
+      context: .
+      dockerfile: Dockerfiles/stage/nginx/Dockerfile
     container_name: nginx
     restart: always
     ports:
       - "80:80"
     volumes:
-      - ./Dockerfiles/stage/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
       - static_volume:/home/app/static
       - media_volume:/home/app/media
     depends_on:
