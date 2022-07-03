@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.9-slim-buster
+FROM python:3.8-slim-buster
 
 LABEL maintainer="bigdeli.ali3@gmail.com"
 
