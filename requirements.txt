@@ -29,4 +29,4 @@ celery
 django-redis
 
 # database client
-psycopg2==2.9.3
+psycopg2-binary
