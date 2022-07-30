@@ -115,3 +115,8 @@ dmypy.json
 
 #postgres db data directory
 data/
+
+# Only for Development only
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
