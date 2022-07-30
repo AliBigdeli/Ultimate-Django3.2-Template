@@ -12,7 +12,7 @@ services:
   backend:
     build: 
       context: . 
-      dockerfile: Dockerfiles/dev/django/Dockerfile
+      dockerfile: dockerfiles/dev/django/Dockerfile
     container_name: backend    
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:

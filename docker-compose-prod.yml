@@ -20,7 +20,7 @@ services:
   backend:
     build: 
       context: .
-      dockerfile: Dockerfiles/prod/django/Dockerfile
+      dockerfile: dockerfiles/prod/django/Dockerfile
     container_name: backend
     command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
@@ -39,7 +39,7 @@ services:
     container_name: nginx-proxy
     build:
       context: .
-      dockerfile: Dockerfiles/prod/nginx/Dockerfile
+      dockerfile: dockerfiles/prod/nginx/Dockerfile
     restart: always
     ports:
       - 443:443
