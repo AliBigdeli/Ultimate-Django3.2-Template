@@ -70,6 +70,13 @@ This project main goal is to provide a way to deploy django applications by usin
 
  <li><strong>Black and Flake8</strong></li>
   <p>Included Pep8 and Flake8 configuration file for test purposes.Reformating the codes and bring the best out of it.</p>
+
+  <li><strong>Django Rest Framework</strong></li>
+  <p>Included DRF package and all its dependencies along side of cors headers. plus simplejwt and token authentication for accounting.</p>
+
+  <li><strong>Swagger and Redoc</strong></li>
+  <p>Allowing the urls to include rest api documentations</p>
+
  <li>
        <strong>Preconfigured</strong>        
   </li>
