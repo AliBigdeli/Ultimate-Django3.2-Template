@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+
+from datetime import timedelta
 from pathlib import Path
-import os
 from django.contrib.messages import constants as messages
 from decouple import config
 
@@ -26,7 +27,7 @@ SECRET_KEY = config("SECRET_KEY", default="test")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool, default=True)
-
+SHOW_DEBUGGER_TOOLBAR = config("SHOW_DEBUGGER_TOOLBAR", cast=bool, default=False)
 
 ALLOWED_HOSTS = config(
     "ALLOWED_HOSTS",
@@ -56,6 +57,8 @@ INSTALLED_APPS = [
     "corsheaders",
 ]
 
+
+
 SITE_ID = config("SITE_ID", cast=int, default=1)
 
 MIDDLEWARE = [
@@ -67,6 +70,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+
 
 ROOT_URLCONF = "core.urls"
 
@@ -92,22 +97,22 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if not DEBUG:
+if DEBUG:
     DATABASES = {
         "default": {
-            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-            "NAME": config("DB_NAME", default="postgres" ),
-            "USER": config("DB_USER", default= "postgres"),
-            "PASSWORD": config("DB_PASS", default= "postgres"),
-            "HOST": config("DB_HOST", default="db" ),
-            "PORT": config("DB_PORT", cast=int,default= 5432),
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
         }
     }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
+            "NAME": config("DB_NAME", default="postgres"),
+            "USER": config("DB_USER", default="postgres"),
+            "PASSWORD": config("DB_PASS", default="postgres"),
+            "HOST": config("DB_HOST", default="db"),
+            "PORT": config("DB_PORT", cast=int, default=5432),
         }
     }
 
@@ -136,7 +141,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE =  config("TIME_ZONE", default= "UTC")
+TIME_ZONE = config("TIME_ZONE", default="UTC")
 
 USE_I18N = True
 
@@ -176,28 +181,29 @@ MESSAGE_TAGS = {
 
 
 # Email Configurations for production and development
-if not DEBUG:
-    EMAIL_BACKEND = config(
-        "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
-    )
-    EMAIL_HOST = config("EMAIL_HOST",default="mail.example.come")
-    EMAIL_PORT = int(config("EMAIL_PORT", default=465))
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER",default="infor@example.com")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD",default="password")
-    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=True)
-    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=False)
-    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL",default="infor@example.com")
-else:
+if DEBUG:    
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_USE_TLS = False
     EMAIL_HOST = "smtp4dev"
     EMAIL_HOST_USER = ""
     EMAIL_HOST_PASSWORD = ""
     EMAIL_PORT = 25
+else:
+    EMAIL_BACKEND = config(
+        "EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+    )
+    EMAIL_HOST = config("EMAIL_HOST", default="mail.example.come")
+    EMAIL_PORT = int(config("EMAIL_PORT", default=465))
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="infor@example.com")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="password")
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=True)
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=False)
+    DEFAULT_FROM_EMAIL = config(
+        "DEFAULT_FROM_EMAIL", default="infor@example.com")
 
 
 # security configs for production
-if config("USE_SSL_CONFIG",cast=bool, default=False):
+if config("USE_SSL_CONFIG", cast=bool, default=False):
     # Https settings
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
@@ -227,37 +233,32 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ],
 }
-if config("DISABLE_BROWSEABLE_API",cast=bool, default=False):
-    REST_FRAMEWORK.update(
-        {
-            "DEFAULT_RENDERER_CLASSES": (
-                "rest_framework.renderers.JSONRenderer",
-            )
-        }
-    )
+if config("DISABLE_BROWSEABLE_API", cast=bool, default=False):
+    REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
+        "rest_framework.renderers.JSONRenderer",)
+
 
 # cors headers config
 CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOWED_ORIGINS = [
 #     "http://localhost:8000",
 #     "http://127.0.0.1:8000",
-    
+
 # ]
 
 # swagger configs
-SHOW_SWAGGER  = config("SHOW_SWAGGER",cast=bool, default=True)
+SHOW_SWAGGER = config("SHOW_SWAGGER", cast=bool, default=True)
 SWAGGER_SETTINGS = {
-    'USE_SESSION_AUTH': True,
-    'SECURITY_DEFINITIONS': [],
-    "LOGIN_URL": 'rest_framework:login',
-    "LOGOUT_URL": 'rest_framework:logout',
-    'REFETCH_SCHEMA_ON_LOGOUT': True,
-    'JSON_EDITOR': True,
-
+    "USE_SESSION_AUTH": True,
+    "SECURITY_DEFINITIONS": [],
+    "LOGIN_URL": "rest_framework:login",
+    "LOGOUT_URL": "rest_framework:logout",
+    "REFETCH_SCHEMA_ON_LOGOUT": True,
+    "JSON_EDITOR": True,
 }
 
 # simple jwt settings
-from datetime import timedelta
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
@@ -268,29 +269,42 @@ SIMPLE_JWT = {
 
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'simple': {
-            'format': '%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {
+            "format": "%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s"
         },
     },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
         },
-        'file': {
-            'level': 'DEBUG',
-            'class': 'logging.FileHandler',
-            'filename': 'log.django',
-            'formatter': 'simple',
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "log.django",
+            "formatter": "simple",
         },
     },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'],
-            'level': config('DJANGO_LOG_LEVEL', default='WARNING'),
-            'propagate': True,
+    "loggers": {
+        "django": {
+            "handlers": ["console", "file"],
+            "level": config("DJANGO_LOG_LEVEL", default="WARNING"),
+            "propagate": True,
         },
     },
 }
+
+# django debug toolbar for docker usage
+if SHOW_DEBUGGER_TOOLBAR:
+    INSTALLED_APPS += [
+        "debug_toolbar",
+    ]
+    MIDDLEWARE += [
+        "debug_toolbar.middleware.DebugToolbarMiddleware",
+    ]
+    import socket  # only if you haven't already imported this
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1", "10.0.2.2"]
+    

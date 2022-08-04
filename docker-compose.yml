@@ -23,6 +23,7 @@ services:
       - SECRET_KEY=test
       - DEBUG=True
       - COMINGSOON=False
+      - SHOW_DEBUGGER_TOOLBAR=True
     restart: always
     # depends_on:
     #   - redis

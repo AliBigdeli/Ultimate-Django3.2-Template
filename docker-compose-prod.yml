@@ -10,6 +10,7 @@ services:
     command: redis-server --save 60 1 --loglevel warning
 
   db:
+    container_name: db
     image: postgres:13-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data

@@ -13,6 +13,7 @@ drf-yasg[validation]
 djangorestframework-simplejwt
 django-cors-headers
 django-robots
+django-debug-toolbar
 
 # deployment module
 gunicorn
@@ -30,3 +31,4 @@ django-redis
 
 # database client
 psycopg2-binary
+
