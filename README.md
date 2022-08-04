@@ -147,10 +147,10 @@ git clone https://github.com/AliBigdeli/Ultimate-Django3.2-Template.git
 
 ```docker
 services:
-  app:
+  backend:
     command: sh -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     environment:      
-      - DEBUG=1
+      - DEBUG=True
 ```
 
 #### Build everything:
@@ -160,7 +160,7 @@ internet connection speed and computer's hardware specs. That's because it's
 going to download a few Docker images and build the Python + requirements dependencies.*
 
 ```sh
-docker-compose up --build
+docker compose up --build
 ```
 
 Now that everything is built and running we can treat it like any other Django
@@ -177,9 +177,12 @@ Visit <http://localhost:8000> in your favorite browser.
 # Testing Usage
 #### running all at the same time:
 ```sh
-docker-compose run --rm app sh -c " black -l 79 && flake8 && python manage.py test" -v core:/app
+docker compose run --rm backend sh -c " black -l 79 && flake8 && python manage.py test" -v core:/app
 ```
-
+or
+```sh
+docker compose exec backend sh -c sh -c " black -l 79 && flake8 && python manage.py test" 
+```
 # Production usage
 
 # License
