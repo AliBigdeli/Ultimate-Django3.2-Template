@@ -3,7 +3,7 @@ version: "3.9"
 services:
   redis:
     container_name: redis
-    image: redis
+    image: redis:6.2.7-alpine
     restart: always
     ports:
       - "6379:6379"
@@ -23,7 +23,6 @@ services:
       context: .
       dockerfile: dockerfiles/prod/django/Dockerfile
     container_name: backend
-    command: gunicorn core.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
@@ -42,37 +41,29 @@ services:
       context: .
       dockerfile: dockerfiles/prod/nginx/Dockerfile
     restart: always
+    env_file:
+      - envs/prod/nginx/.env
     ports:
       - 443:443
       - 80:80
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
-      - certs:/etc/nginx/certs
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - cert_www_volume:/var/www/certbot/:ro
+      - cert_conf_volume:/etc/nginx/ssl/:ro
+
     depends_on:
       - backend
     
-  nginx-proxy-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    env_file:
-      - envs/prod/nginx/.env
+  certbot:
+    image: certbot/certbot:latest
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - certs:/etc/nginx/certs
-      - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
-      - acme:/etc/acme.sh
-    depends_on:
-      - nginx-proxy
+      - cert_www_volume:/var/www/certbot/:rw
+      - cert_conf_volume:/etc/letsencrypt/:rw
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
-  certs:
-  html:
-  vhost:
-  acme:
+  cert_www_volume:
+  cert_conf_volume:
