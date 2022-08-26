@@ -39,11 +39,8 @@ services:
     container_name: certbot
     volumes: 
       - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
-      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
-    env_file:
-      - ./envs/prod/nginx/.env
+      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot:rw
 
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN} --agree-tos
 
   nginx-proxy:
     container_name: nginx-proxy
@@ -64,7 +61,6 @@ services:
       - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
     depends_on:
       - backend
-      - certbot
     
 
 
