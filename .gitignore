@@ -87,7 +87,7 @@ celerybeat-schedule
 *.sage.py
 
 # Environments
-.envs/django/.env
+.env
 .venv
 env/
 venv/
