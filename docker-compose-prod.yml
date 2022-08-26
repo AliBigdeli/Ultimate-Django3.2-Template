@@ -15,7 +15,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     env_file:
-      - envs/prod/db/.env
+      - ./envs/prod/db/.env
     restart: always
 
   backend:
@@ -29,7 +29,7 @@ services:
     expose:
       - "8000"
     env_file:
-      - envs/prod/django/.env
+      - ./envs/prod/django/.env
     depends_on:
       - db
       - redis
@@ -41,8 +41,9 @@ services:
       - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
       - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
     env_file:
-      - envs/prod/nginx/.env
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email {EMAIL} -d {DOMAIN} --agree-tos
+      - ./envs/prod/nginx/.env
+
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN} --agree-tos
 
   nginx-proxy:
     container_name: nginx-proxy
@@ -51,13 +52,14 @@ services:
       dockerfile: dockerfiles/prod/nginx/Dockerfile
     restart: always
     env_file:
-      - envs/prod/nginx/.env
+      - ./envs/prod/nginx/.env
     ports:
       - 443:443
       - 80:80
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
+      - ./dockerfiles/prod/nginx/config:/etc/nginx/templates:rw,cached
       - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
       - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
     depends_on:

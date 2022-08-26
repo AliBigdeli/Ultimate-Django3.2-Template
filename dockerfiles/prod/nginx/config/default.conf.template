@@ -36,8 +36,8 @@ server {
     # limit_req_status 429;
 
     # Let's Encrypt parameters
-    ssl_certificate     /etc/letsencrypt/live/{DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/{DOMAIN}/privkey.pem;
+    ssl_certificate     /etc/letsencrypt/live/${DOMAIN}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${DOMAIN}/privkey.pem;
     # keepalive_timeout   70;
     
     # ssl configs which has been given from cert bot
