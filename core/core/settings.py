@@ -320,7 +320,8 @@ CSP_DEFAULT_SRC = ("'self'", )
   
 # style from our domain and bootstrapcdn
 CSP_STYLE_SRC = ("'self'", 
-    "stackpath.bootstrapcdn.com")
+    "stackpath.bootstrapcdn.com",
+    "cdn.jsdelivr.net")
   
 # scripts from our domain and other domains
 CSP_SCRIPT_SRC = ("'self'",
@@ -330,7 +331,8 @@ CSP_SCRIPT_SRC = ("'self'",
     "ssl.google-analytics.com",
     "cdn.ampproject.org",
     "www.googletagservices.com",
-    "pagead2.googlesyndication.com")
+    "pagead2.googlesyndication.com",
+    "cdn.jsdelivr.net")
   
 # images from our domain and other domains
 CSP_IMG_SRC = ("'self'",
