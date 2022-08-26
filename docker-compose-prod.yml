@@ -35,7 +35,7 @@ services:
       - redis
   
   certbot:
-    image: certbot/certbot:latest
+    image: certbot/certbot:arm32v6-latest
     container_name: certbot
     volumes: 
       - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
