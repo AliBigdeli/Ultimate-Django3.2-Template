@@ -335,10 +335,7 @@ CSP_SCRIPT_SRC = ("'self'",
     "cdn.jsdelivr.net")
   
 # images from our domain and other domains
-CSP_IMG_SRC = ("'self'",
-    "www.google-analytics.com",
-    "raw.githubusercontent.com",
-    "googleads.g.doubleclick.net")
+CSP_IMG_SRC = ("'unsafe-inline'",)
   
 # loading manifest, workers, frames, etc
 CSP_FONT_SRC = ("'self'", )
