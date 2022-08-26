@@ -195,6 +195,7 @@ MIT.
 - [x] add test usage doc
 - [x] add encryptions
 - [x] add 3 stages dev stageing production
+- [ ] add certbot for auto certificate creation
 - [ ] add production usage doc
 
 # Bugs

@@ -49,17 +49,20 @@ services:
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
-      - cert_www_volume:/var/www/certbot/:ro
-      - cert_conf_volume:/etc/nginx/ssl/:ro
-
+      - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
+      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
     depends_on:
       - backend
     
   certbot:
     image: certbot/certbot:latest
-    volumes:
-      - cert_www_volume:/var/www/certbot/:rw
-      - cert_conf_volume:/etc/letsencrypt/:rw
+    container_name: certbot
+    volumes: 
+      - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
+      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
+    env_file:
+      - envs/prod/nginx/.env
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email {EMAIL} -d {DOMAIN} --agree-tos
 
 volumes:
   postgres_data:
