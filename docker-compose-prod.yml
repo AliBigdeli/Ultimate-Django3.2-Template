@@ -21,7 +21,7 @@ services:
   backend:
     build: 
       context: .
-      dockerfile: dockerfiles/prod/django/Dockerfile
+      dockerfile: dockerfiles/stage/django/Dockerfile
     container_name: backend
     volumes:
       - static_volume:/usr/src/app/static
@@ -35,18 +35,22 @@ services:
       - redis
   
   certbot:
-    image: certbot/certbot:arm32v6-latest
+    build: 
+      context: ./dockerfiles/prod/certbot/
+    command: echo "Skipping..."
     container_name: certbot
+    env_file:
+      - ./envs/prod/nginx/.env
     volumes: 
-      - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
-      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot:rw
+      - certbot_www_volume:/vol/www/
+      - certbot_certs_volume:/etc/letsencrypt/
+    depends_on:
+      - nginx
 
-
-  nginx-proxy:
-    container_name: nginx-proxy
+  nginx:
+    container_name: nginx
     build:
-      context: .
-      dockerfile: dockerfiles/prod/nginx/Dockerfile
+      context: ./dockerfiles/prod/nginx/
     restart: always
     env_file:
       - ./envs/prod/nginx/.env
@@ -56,17 +60,18 @@ services:
     volumes:
       - static_volume:/home/app/static
       - media_volume:/home/app/media
-      - ./dockerfiles/prod/nginx/config:/etc/nginx/templates:rw,cached
-      - ./dockerfiles/prod/nginx/certbot/conf:/etc/letsencrypt
-      - ./dockerfiles/prod/nginx/certbot/www:/var/www/certbot
+      - certbot_www_volume:/vol/www/
+      - proxy_dhparams:/vol/proxy
+      - certbot_certs_volume:/etc/letsencrypt/
+      - ./dockerfiles/prod/nginx/config:/etc/nginx/templates
+
     depends_on:
       - backend
-    
-
 
 volumes:
   postgres_data:
   static_volume:
   media_volume:
-  cert_www_volume:
-  cert_conf_volume:
+  certbot_www_volume:
+  certbot_certs_volume:
+  proxy_dhparams:

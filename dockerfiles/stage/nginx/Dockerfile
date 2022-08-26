@@ -1,2 +1,2 @@
 FROM nginx:alpine
-COPY dockerfiles/stage/nginx/conf.d/ /etc/nginx/conf.d/
+COPY ./conf.d/ /etc/nginx/conf.d/

@@ -37,8 +37,7 @@ services:
 
   nginx:
     build:
-      context: .
-      dockerfile: dockerfiles/stage/nginx/Dockerfile
+      context: ./dockerfiles/stage/nginx/
     container_name: nginx
     restart: always
     ports:

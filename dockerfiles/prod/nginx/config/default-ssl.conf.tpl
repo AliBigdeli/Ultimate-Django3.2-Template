@@ -9,7 +9,7 @@ server {
     error_log /var/log/nginx/error_log.log;
 
 
-    location ~ /.well-known/acme-challenge/ {
+    location /.well-known/acme-challenge/ {
         root /var/www/certbot;
     }
 
@@ -22,7 +22,7 @@ server {
  
 
 server {
-	  listen 443 ssl;
+	listen 443 ssl;
 
     # server names
     server_name ${DOMAIN} www.${DOMAIN};
@@ -47,13 +47,13 @@ server {
     ssl_protocols TLSv1.2 TLSv1.3;
     ssl_prefer_server_ciphers off;
     ssl_ciphers "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:DHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES256-GCM-SHA384";
+    ssl_dhparam /vol/proxy/ssl-dhparams.pem;
 
     # charset config
     charset     utf-8;
 
     # max upload size
     client_max_body_size 10M;   # adjust to taste
-	
 
 	server_tokens off;
 

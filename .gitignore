@@ -123,6 +123,3 @@ data/
 
 # ignore django logs
 log.django
-
-# certbot
-**/certbot
