@@ -15,7 +15,7 @@ server {
 
 
     location / {
-        return 301 https://$host$request_uri;
+        return 301 https://${DOMAIN}$request_uri;
     }
 }
 
@@ -25,7 +25,7 @@ server {
 	listen 443 ssl;
 
     # server names
-    server_name ${DOMAIN} www.${DOMAIN};
+    # server_name ${DOMAIN};
 
     # slow connections timeout
     # client_body_timeout 5s;
