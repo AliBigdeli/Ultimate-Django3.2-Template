@@ -183,7 +183,22 @@ or
 ```sh
 docker compose exec backend sh -c sh -c " black -l 79 && flake8 && python manage.py test" 
 ```
+
+# Stage usage
+In this phase of the project you can launch the service either in your pc/laptop to use as local host or you can setup on a vps to access through ip or even the domain which is dedicated to it. 
+but before that dont forget to create .env files in the envs directory for stage mode which contains backend,nginx and the db.
+after creating the files all you need to do to build the project is to run the command bellow:
+```bash
+docker compose -f docker-compose-stage.yml up --build
+```
 # Production usage
+In this phase of the project you can launch the project only on the vps with the domain name connect to it other than that you have to change the settings accordingly.(you can use the stage config as base for the nginx)
+But before that dont forget to create .env files in the envs directory for prod mode which contains backend,nginx and the db.
+after creating the files all you need to do to build the project is to run the command bellow:
+```bash
+docker compose -f docker-compose-prod.yml  run --rm certbot /opt/certify-init.sh
+```
+<strong>Note:</strong>the command i provided will firstly create the containers and volumes to run the whole project, then it will create a container to access the running server, when the server is accessible it will ask letsencrypt server to create a certificate for it with acme challange. this certificate will be valid for 90 days and you can renew it when ever you want.
 
 # License
 MIT.
