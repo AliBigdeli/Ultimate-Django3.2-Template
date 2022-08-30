@@ -81,13 +81,19 @@ server {
       alias /home/app/media/;
     }
 
-    location / {        
-        proxy_redirect     off;
-        # proxy_set_header   Host $host;
-        # proxy_set_header   REMOTE_ADDR $remote_addr;
-        # proxy_set_header   X-Url-Scheme $scheme;
-        # proxy_set_header   X-Real-IP $remote_addr;
-        # proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+    location / {
+        # proxy_pass_request_headers on;
+        # proxy_buffering on;
+        # proxy_buffers 8 24k;
+        # proxy_buffer_size 2k;  
+        proxy_redirect      off;
+        proxy_set_header    Host                $host;
+        proxy_set_header    REMOTE_ADDR         $remote_addr;
+        proxy_set_header    X-Url-Scheme        $scheme;
+        proxy_set_header    X-Real-IP           $remote_addr;
+        proxy_set_header    X-Forwarded-For     $proxy_add_x_forwarded_for;
+        proxy_set_header    X-Forwarded-Proto   https;
+        proxy_set_header    User-Agent          $http_user_agent;
         proxy_pass   http://backend:8000;
     }
 }
