@@ -29,6 +29,9 @@
 # Goal
 This project main goal is to provide a way to deploy django applications by using docker along with nginx, gunicorn and letsencrypt and much more features a backed developer needs.
 
+<img src="https://user-images.githubusercontent.com/29748439/187756542-9036d351-3d77-4c61-8a99-6b46c3701a90.png" alt="video" style="max-width:1280" />
+
+
 
 # Repo Features
 <ul>
