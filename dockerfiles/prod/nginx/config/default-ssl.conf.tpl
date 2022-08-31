@@ -59,7 +59,7 @@ server {
 
     # Secruity headers
     add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload";
-    add_header Content-Security-Policy "default-src 'self'; img-src * data:; font-src 'self' data:; frame-src 'self' https://www.google.com/; connect-src 'self' ;style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net ;script-src 'self' 'unsafe-inline' https://apis.google.com https://www.google.com https://www.gstatic.com/ https://cdn.jsdelivr.net ; object-src 'self' ;frame-ancestors 'self'; form-action 'self'; base-uri 'self';";
+    add_header Content-Security-Policy "default-src 'self'; img-src * data:; font-src 'self' data:; frame-src 'self' https://www.google.com/; connect-src 'self' ;style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net ;script-src 'self' https://cdn.jsdelivr.net ; object-src 'self' ;frame-ancestors 'self'; form-action 'self'; base-uri 'self';";
     add_header X-XSS-Protection "1; mode=block";
     add_header X-Frame-Options "SAMEORIGIN";
     add_header X-Content-Type-Options nosniff;
