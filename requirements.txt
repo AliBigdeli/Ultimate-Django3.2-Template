@@ -12,7 +12,6 @@ django-filter
 drf-yasg[validation]
 djangorestframework-simplejwt
 django-cors-headers
-django-csp
 django-robots
 django-debug-toolbar
 
