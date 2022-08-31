@@ -17,6 +17,7 @@
     
 # Guideline
 - [Goal](#goal)
+- [How to setup](#how-to-setup)
 - [Repo Features](#repo-features)
 - [Configurations](#configurations)
 - [Development usage](#development-usage)
@@ -28,6 +29,12 @@
 
 # Goal
 This project main goal is to provide a way to deploy django applications by using docker along with nginx, gunicorn and letsencrypt and much more features a backed developer needs.
+
+# How to setup
+you can watch this video to know how you can use this repo
+
+
+
 
 
 # Repo Features
