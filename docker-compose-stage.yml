@@ -24,6 +24,7 @@ services:
       dockerfile: dockerfiles/stage/django/Dockerfile
     container_name: backend
     volumes:
+      - ./core:/usr/src/app
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
     expose:
@@ -46,6 +47,7 @@ services:
       - media_volume:/home/app/media
     depends_on:
       - backend
+
 
 volumes:
   static_volume:

@@ -63,7 +63,6 @@ services:
       - certbot_www_volume:/vol/www/
       - proxy_dhparams:/vol/proxy
       - certbot_certs_volume:/etc/letsencrypt/
-      - ./dockerfiles/prod/nginx/config:/etc/nginx/templates
 
     depends_on:
       - backend
