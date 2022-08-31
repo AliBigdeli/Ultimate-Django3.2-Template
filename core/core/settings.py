@@ -205,6 +205,7 @@ else:
 
 # security configs for production
 if config("USE_SSL_CONFIG", cast=bool, default=False):
+    pass
     # Https settings
     # SESSION_COOKIE_SECURE = True
     # CSRF_COOKIE_SECURE = True
@@ -219,9 +220,9 @@ if config("USE_SSL_CONFIG", cast=bool, default=False):
     # SECURE_CONTENT_TYPE_NOSNIFF = True
     #  SECURE_BROWSER_XSS_FILTER = True
     # X_FRAME_OPTIONS = "SAMEORIGIN"
-    SECURE_REFERRER_POLICY = "strict-origin"
-    USE_X_FORWARDED_HOST = True
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # SECURE_REFERRER_POLICY = "strict-origin"
+    # USE_X_FORWARDED_HOST = True
+    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
