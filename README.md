@@ -199,6 +199,13 @@ docker compose -f docker-compose-prod.yml  run --rm certbot /opt/certify-init.sh
 ```
 <strong>Note:</strong>the command i provided will firstly create the containers and volumes to run the whole project, then it will create a container to access the running server, when the server is accessible it will ask letsencrypt server to create a certificate for it with acme challange. this certificate will be valid for 90 days and you can renew it when ever you want.
 
+# Security
+On Production mode you have all the security headers and settings added to nginx and even auto ssl encryption for 90 days valid. you can find the results by using these services:
+- Mozilla Observatory
+- Security Headers
+- SSL Checker
+
+
 # License
 MIT.
 

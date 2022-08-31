@@ -205,7 +205,6 @@ else:
 
 # security configs for production
 if config("USE_SSL_CONFIG", cast=bool, default=False):
-    pass
     # Https settings
     # SESSION_COOKIE_SECURE = True
     # CSRF_COOKIE_SECURE = True
@@ -217,7 +216,7 @@ if config("USE_SSL_CONFIG", cast=bool, default=False):
     # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
     # more security settings
-    # SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
     #  SECURE_BROWSER_XSS_FILTER = True
     # X_FRAME_OPTIONS = "SAMEORIGIN"
     # SECURE_REFERRER_POLICY = "strict-origin"
