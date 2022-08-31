@@ -202,22 +202,20 @@ docker compose -f docker-compose-prod.yml  run --rm certbot /opt/certify-init.sh
 # Security
 On Production mode you have all the security headers and settings added to nginx and even auto ssl encryption for 90 days valid. you can find the results by using these services:
 - Mozilla Observatory
+<img src="https://user-images.githubusercontent.com/29748439/187753171-c600c12d-1979-44e7-ad32-65243e777c77.png" alt="security headers" style="max-width:1280px;width:100%" />
+
 - Security Headers
+<img src="https://user-images.githubusercontent.com/29748439/187752756-8368f1dc-e4c2-4256-ab8a-9c7d2a44da00.png" alt="security headers" style="max-width:1280px;width:100%" />
+
 - SSL Checker
+<img src="https://user-images.githubusercontent.com/29748439/187753336-dd575268-f2be-49b9-9934-21928017d518.png" alt="security headers" style="max-width:200px;width:100%; max-height:400px;text-align:center" />
 
 
 # License
 MIT.
 
 # Todo
-- [x] fix production composefile
-- [x] connect repo to travis ci
-- [x] add development usage doc
-- [x] add test usage doc
-- [x] add encryptions
-- [x] add 3 stages dev stageing production
-- [ ] add certbot for auto certificate creation
-- [ ] add production usage doc
+- [ ] add pre commands
 
 # Bugs
 Feel free to let me know if something needs to be fixed. or even any features seems to be needed in this repo.
