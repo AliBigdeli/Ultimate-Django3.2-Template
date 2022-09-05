@@ -212,7 +212,7 @@ FROM certbot/certbot:arm32v6-latest
 to
 
 ```bash
-FROM certbot/certbot:latest
+FROM certbot/certbot:v1.27.0
 ```
 
 
