@@ -1,21 +1,16 @@
 # pull official base image
-FROM python:3.8-alpine
+FROM python:3.9-alpine as base
 
 LABEL maintainer="bigdeli.ali3@gmail.com"
 
 # set work directory
 WORKDIR /usr/src/app
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
 
 COPY ./requirements.txt .
-
-
-RUN apk add --no-cache --virtual .build-deps \
-    ca-certificates gcc postgresql-dev linux-headers musl-dev \
-    libffi-dev jpeg-dev zlib-dev \
+RUN apk add --no-cache --virtual --update .build-deps \
+    build-base python3-dev ca-certificates gcc postgresql-dev linux-headers musl-dev \
+    libffi-dev jpeg-dev zlib-dev libpq \
     && pip install -r requirements.txt \
     && find /usr/local \
         \( -type d -a -name test -o -name tests \) \
@@ -31,11 +26,18 @@ RUN apk add --no-cache --virtual .build-deps \
     && apk add --virtual .rundeps $runDeps \
     && apk del .build-deps
 
+# Now multistage build
+FROM python:3.9-alpine
+RUN apk add libpq
+COPY --from=base /usr/local/lib/python3.9/site-packages/ /usr/local/lib/python3.9/site-packages/
+COPY --from=base /usr/local/bin/ /usr/local/bin/
+
+# set work directory
+WORKDIR /usr/src/app
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 # copy project
 COPY ./core .
-
-CMD python3 manage.py check_database && \
-    python3 manage.py makemigrations --noinput && \
-    python3 manage.py migrate --noinput && \
-    python3 manage.py collectstatic --noinput && \
-    gunicorn --bind 0.0.0.0:8000 core.wsgi:application
