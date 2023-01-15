@@ -21,7 +21,7 @@ services:
   backend:
     build: 
       context: .
-      dockerfile: dockerfiles/stage/django/Dockerfile
+      dockerfile: dockerfiles/prod/django/Dockerfile
     container_name: backend
     command: sh -c "python3 manage.py check_database && \
                     python3 manage.py makemigrations --noinput && \
