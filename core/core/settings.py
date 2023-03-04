@@ -215,7 +215,8 @@ if config("USE_SSL_CONFIG", cast=bool, default=False):
     SECURE_REFERRER_POLICY = "strict-origin"
     USE_X_FORWARDED_HOST = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+    
+# restframework configurations
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.AllowAny",
@@ -261,34 +262,34 @@ SIMPLE_JWT = {
     "UPDATE_LAST_LOGIN": False,
 }
 
-
-LOGGING = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "simple": {
-            "format": "%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s"
+if config("FILE_DEBUGGER",cast=bool, default=True):
+    LOGGING = {
+        "version": 1,
+        "disable_existing_loggers": False,
+        "formatters": {
+            "simple": {
+                "format": "%(levelname)s %(asctime)s %(name)s.%(funcName)s:%(lineno)s- %(message)s"
+            },
         },
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
+        "handlers": {
+            "console": {
+                "class": "logging.StreamHandler",
+            },
+            "file": {
+                "level": "DEBUG",
+                "class": "logging.FileHandler",
+                "filename": "log.django",
+                "formatter": "simple",
+            },
         },
-        "file": {
-            "level": "DEBUG",
-            "class": "logging.FileHandler",
-            "filename": "log.django",
-            "formatter": "simple",
+        "loggers": {
+            "django": {
+                "handlers": ["console", "file"],
+                "level": config("DJANGO_LOG_LEVEL", default="WARNING"),
+                "propagate": True,
+            },
         },
-    },
-    "loggers": {
-        "django": {
-            "handlers": ["console", "file"],
-            "level": config("DJANGO_LOG_LEVEL", default="WARNING"),
-            "propagate": True,
-        },
-    },
-}
+    }
 
 # django debug toolbar for docker usage
 if SHOW_DEBUGGER_TOOLBAR:
