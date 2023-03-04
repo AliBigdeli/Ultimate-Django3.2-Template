@@ -123,3 +123,6 @@ data/
 
 # ignore django logs
 log.django
+
+# postgre data
+postgre/*
