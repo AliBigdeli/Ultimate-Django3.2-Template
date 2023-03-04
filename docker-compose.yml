@@ -1,13 +1,17 @@
 version: "3.9"
 
 services:
-  # redis:
-  #   container_name: redis
-  #   image: redis
-  #   restart: always
-  #   ports:
-  #   - "6379:6379"
-  #   command: redis-server --save 60 1 --loglevel warning
+
+  db:
+    container_name: db
+    image: postgres:alpine
+    volumes:
+      - ./postgre/data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
 
   backend:
     build:
@@ -25,6 +29,7 @@ services:
       - COMINGSOON=False
       - SHOW_DEBUGGER_TOOLBAR=True
     restart: always
+
     # depends_on:
     #   - redis
 
@@ -36,6 +41,14 @@ services:
     #   depends_on:
     #     - redis
     #     - backend
+
+    # redis:
+    #   container_name: redis
+    #   image: redis
+    #   restart: always
+    #   ports:
+    #   - "6379:6379"
+    #   command: redis-server --save 60 1 --loglevel warning
 
   smtp4dev:
     image: rnwood/smtp4dev:v3

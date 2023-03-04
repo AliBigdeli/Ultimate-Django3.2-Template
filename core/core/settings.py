@@ -98,24 +98,17 @@ WSGI_APPLICATION = "core.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
+
+DATABASES = {
+    "default": {
+        "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
+        "NAME": config("DB_NAME", default="postgres"),
+        "USER": config("DB_USER", default="postgres"),
+        "PASSWORD": config("DB_PASS", default="postgres"),
+        "HOST": config("DB_HOST", default="db"),
+        "PORT": config("DB_PORT", cast=int, default=5432),
     }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": config("DB_ENGINE", default="django.db.backends.postgresql"),
-            "NAME": config("DB_NAME", default="postgres"),
-            "USER": config("DB_USER", default="postgres"),
-            "PASSWORD": config("DB_PASS", default="postgres"),
-            "HOST": config("DB_HOST", default="db"),
-            "PORT": config("DB_PORT", cast=int, default=5432),
-        }
-    }
+}
 
 
 # Password validation
@@ -206,22 +199,22 @@ else:
 # security configs for production
 if config("USE_SSL_CONFIG", cast=bool, default=False):
     # Https settings
-    # SESSION_COOKIE_SECURE = True
-    # CSRF_COOKIE_SECURE = True
-    # SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
 
     # HSTS settings
-    # SECURE_HSTS_SECONDS = 31536000  # 1 year
-    # SECURE_HSTS_PRELOAD = True
-    # SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_PRELOAD = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
     # more security settings
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    #  SECURE_BROWSER_XSS_FILTER = True
-    # X_FRAME_OPTIONS = "SAMEORIGIN"
-    # SECURE_REFERRER_POLICY = "strict-origin"
-    # USE_X_FORWARDED_HOST = True
-    # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    SECURE_BROWSER_XSS_FILTER = True
+    X_FRAME_OPTIONS = "SAMEORIGIN"
+    SECURE_REFERRER_POLICY = "strict-origin"
+    USE_X_FORWARDED_HOST = True
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": [
@@ -234,6 +227,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.SessionAuthentication",
     ],
 }
+
 if config("DISABLE_BROWSEABLE_API", cast=bool, default=False):
     REST_FRAMEWORK["DEFAULT_RENDERER_CLASSES"] = (
         "rest_framework.renderers.JSONRenderer",)
@@ -259,7 +253,6 @@ SWAGGER_SETTINGS = {
 }
 
 # simple jwt settings
-
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
