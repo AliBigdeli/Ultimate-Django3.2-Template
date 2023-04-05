@@ -23,11 +23,13 @@ services:
       - ./core:/app
     ports:
       - "8000:8000"
+      - "5678:5678"
     environment:
       - SECRET_KEY=test
       - DEBUG=True
       - COMINGSOON=False
       - SHOW_DEBUGGER_TOOLBAR=True
+      - ENABLE_DEBUGPY=True
     restart: always
 
     # depends_on:
