@@ -12,6 +12,11 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   backend:
     build:
@@ -32,8 +37,10 @@ services:
       - ENABLE_DEBUGPY=True
     restart: always
 
-    # depends_on:
-    #   - redis
+    depends_on:
+      # - redis
+      - db
+
 
     # worker:
     #   build: .
