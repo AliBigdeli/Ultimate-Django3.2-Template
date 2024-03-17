@@ -32,3 +32,4 @@ django-redis
 # database client
 psycopg2-binary
 
+# i write this for test the forl
